@@ -1,15 +1,16 @@
 package ru.diploma.cloudstor.repository;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Repository;
 import ru.diploma.cloudstor.entity.CloudFile;
 
 import java.util.List;
-import java.util.Optional;
 
+@Repository
 public interface FileRepository extends JpaRepository<CloudFile, Long> {
-
 
     void deleteByUserIdAndFilename(Long userId, String filename);
 
@@ -20,11 +21,5 @@ public interface FileRepository extends JpaRepository<CloudFile, Long> {
 
     @Modifying(clearAutomatically = true)
     @Query("update CloudFile  f set f.filename = :newName where f.filename = :fileName and f.userId = :userId")
-    void updateFileNameByUserId(@Param("userId")Long userId, @Param("fileName")String oldFileName, @Param("newName")String newFileName);
-
-//    @Modifying
-//    @Query(value = "update CloudFile f set f.filename = :newName where f.filename = :fileName and f.userId = :userId")
-//    void updateFileNameByUserId(@Param("userId")Long userId, @Param("fileName")String oldFileName, @Param("newName")String newFileName);
-
-
+    void updateFileNameByUserId(@Param("userId") Long userId, @Param("fileName") String oldFileName, @Param("newName") String newFileName);
 }

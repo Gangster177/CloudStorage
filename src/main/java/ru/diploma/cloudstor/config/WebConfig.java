@@ -1,11 +1,7 @@
 package ru.diploma.cloudstor.config;
 
-
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
-import org.springframework.web.servlet.config.annotation.AsyncSupportConfigurer;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
@@ -13,16 +9,16 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @Configuration
 public class WebConfig implements WebMvcConfigurer {
 
-    @Value("${app.configuration.cors.origins}")
+    @Value("${cors.origins}")
     private String origins;
 
-    @Value("${app.configuration.cors.headers}")
+    @Value("${cors.headers}")
     private String allowedHeaders;
 
-    @Value("${app.configuration.cors.methods}")
+    @Value("${cors.methods}")
     private String allowedMethods;
 
-    @Value("${app.configuration.cors.allow-credentials}")
+    @Value("${cors.credentials}")
     private boolean allowCredentials;
 
     @Override
@@ -33,7 +29,6 @@ public class WebConfig implements WebMvcConfigurer {
         registry.addViewController("/list").setViewName("list");
     }
 
-
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
@@ -42,12 +37,4 @@ public class WebConfig implements WebMvcConfigurer {
                 .allowedMethods(allowedMethods)
                 .allowedHeaders(allowedHeaders);
     }
-//    @Override
-//    public void addCorsMappings(CorsRegistry registry) {
-//        registry.addMapping("/**")
-//                .allowCredentials(true)
-//                .allowedOrigins("http://localhost:8091")//allowedOrigins – это адрес фронта
-//                .allowedMethods("*")
-//                .allowedHeaders("*");
-//    }
 }

@@ -18,10 +18,10 @@ import java.util.stream.Collectors;
 @Component
 public class JwtTokenUtil {
 
-    @Value("${app.jwt.secret}")
+    @Value("${jwt.token.secret}")
     private String secret;
 
-    @Value("${app.jwt.lifetime}")
+    @Value("${jwt.token.lifetime}")
     private Duration jwtLifetime;
 
     public String generateToken(UserDetails userDetails) {
@@ -42,9 +42,6 @@ public class JwtTokenUtil {
                 .compact();
     }
 
-    // get Username and
-    // get Roles
-    // from incoming token
     public String getUsername(String token) {
         return getAllClaimsFromToken(token).getSubject();
     }
@@ -56,7 +53,7 @@ public class JwtTokenUtil {
     private Claims getAllClaimsFromToken(String token) {
         return Jwts.parser()
                 .setSigningKey(secret)
-                .parseClaimsJws(token)// Verification : signatures, lifetime
+                .parseClaimsJws(token)
                 .getBody();
     }
 }

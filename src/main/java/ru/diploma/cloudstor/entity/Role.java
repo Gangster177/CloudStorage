@@ -1,12 +1,12 @@
 package ru.diploma.cloudstor.entity;
 
 
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import ru.diploma.cloudstor.model.EnumRoles;
-import jakarta.persistence.*;
 
 import java.util.Set;
 
@@ -14,7 +14,7 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "roles")
+@Table(name = "roles", schema = "netology_diploma")
 public class Role implements GrantedAuthority {
 
     @Id
@@ -28,9 +28,8 @@ public class Role implements GrantedAuthority {
         this.name = name;
     }
 
-
     @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.DETACH, CascadeType.REFRESH, CascadeType.MERGE})
-    @JoinTable(name = "user_roles",
+    @JoinTable(name = "users_role", schema = "netology_diploma",
             joinColumns = @JoinColumn(name = "role_id"),
             inverseJoinColumns = @JoinColumn(name = "user_id"))
     private Set<User> users;

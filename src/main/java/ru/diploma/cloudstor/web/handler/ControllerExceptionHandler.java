@@ -34,13 +34,13 @@ public class ControllerExceptionHandler {
     @ExceptionHandler(InputDataException.class)
     public ResponseEntity<ExceptionWebResponse> handleInputDataException(@NonNull final InputDataException exc) {
         log.error(exc.getMessage());
-        return new ResponseEntity<>(new ExceptionWebResponse(exc.getMessage(),400), HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(new ExceptionWebResponse(exc.getMessage(), 400), HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(FileCloudException.class)
     public ResponseEntity<ExceptionWebResponse> handleFileCloudException(@NonNull final FileCloudException exc) {
         log.error(exc.getMessage());
-        return new ResponseEntity<>(new ExceptionWebResponse(exc.getMessage(),500), HttpStatus.INTERNAL_SERVER_ERROR);
+        return new ResponseEntity<>(new ExceptionWebResponse(exc.getMessage(), 500), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
 }

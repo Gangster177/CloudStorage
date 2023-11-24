@@ -12,6 +12,4 @@ public class AuthResponse {
 
     @JsonProperty("auth-token")
     private String authToken;
-
-
 }

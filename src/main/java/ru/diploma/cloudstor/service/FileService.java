@@ -79,7 +79,6 @@ public class FileService {
         log.info("Success delete file. User with ID {}", userId.get());
     }
 
-
     @Transactional
     public CloudFile downloadFile(String authToken, String filename) {
         final Optional<Long> userId = getUserIdFromToken(authToken);
@@ -95,7 +94,6 @@ public class FileService {
         log.info("File downloaded successfully. User with ID {}", userId.get());
         return cloudFile;
     }
-
 
     @Transactional
     public void editFile(String authToken, String filename, String newFileName) {
@@ -133,9 +131,7 @@ public class FileService {
                 .map(fileMapper::cloudFileToFileWebResponse)
                 .sorted(Comparator.comparing(FileWebResponse::getFilename))
                 .collect(Collectors.toList());
-
     }
-
 
     public Optional<Long> getUserIdFromToken(String authToken) {
         if (authToken.startsWith("Bearer ")) {

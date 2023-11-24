@@ -1,7 +1,7 @@
 CREATE SCHEMA netology_diploma;
 create table netology_diploma.users
 (
-    id       serial,
+    id       bigserial,
     username varchar(255) not null,
     password varchar(255) not null,
     primary key (id)
@@ -9,15 +9,15 @@ create table netology_diploma.users
 
 create table netology_diploma.roles
 (
-    id   serial,
-    name varchar(50) not null,
+    id   bigserial,
+    name varchar(50),
     primary key (id)
 );
 
 create table netology_diploma.users_role
 (
-    user_id bigint not null,
-    role_id int    not null,
+    user_id bigint ,
+    role_id bigint ,
     primary key (user_id, role_id),
     foreign key (user_id) references netology_diploma.users (id),
     foreign key (role_id) references netology_diploma.roles (id)
@@ -25,12 +25,12 @@ create table netology_diploma.users_role
 
 create table netology_diploma.files
 (
-    id        serial ,
-    filename  varchar(255),
-    date      date,
+    id        bigserial ,
+    filename  varchar(255) not null,
+    date      date not null,
     type      varchar(255),
-    file_data oid,
-    size      bigint,
+    file_data oid not null,
+    size      bigint not null,
     user_id   bigint not null references netology_diploma.users(id),
     primary key (id)
 );

@@ -1,4 +1,5 @@
 package ru.diploma.cloudstor.service;
+
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -22,12 +23,11 @@ public class UserService implements UserDetailsService {
     }
 
     @Override
-    public UserDetails loadUserByUsername(String username)  throws UsernameNotFoundException {
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User userDetails = userRepository.findByUsername(username).orElseThrow(
                 () ->
                         new UsernameNotFoundException(
-                                format("User with username - %s, not found", username)));;
+                                format("User with username - %s, not found", username)));
         return userDetails;
     }
-
 }

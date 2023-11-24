@@ -1,6 +1,5 @@
 package ru.diploma.cloudstor.controller;
 
-
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
@@ -15,7 +14,6 @@ import ru.diploma.cloudstor.web.request.FileNameEditRequest;
 import ru.diploma.cloudstor.web.response.FileWebResponse;
 
 import java.util.List;
-
 
 @Slf4j
 @RestController
@@ -52,7 +50,7 @@ public class FileController {
     @PutMapping("/file")
     public ResponseEntity<?> editFile(@RequestHeader("auth-token") String authToken,
                                       @RequestParam("filename") String filename,
-                                      @RequestBody FileNameEditRequest editRequest ) {
+                                      @RequestBody FileNameEditRequest editRequest) {
         fileService.editFile(authToken, filename, editRequest.getFilename());
         log.info("File edited successfully");
         return ResponseEntity.ok(HttpStatus.OK);

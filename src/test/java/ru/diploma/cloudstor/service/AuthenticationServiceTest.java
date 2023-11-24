@@ -21,7 +21,6 @@ import static ru.diploma.cloudstor.DataTest.*;
 @DisplayName("=== Testing authentication service ===")
 public class AuthenticationServiceTest {
 
-
     @InjectMocks
     AuthenticationService authenticationService;
 
@@ -36,7 +35,6 @@ public class AuthenticationServiceTest {
 
     @Mock
     JwtTokenUtil jwtTokenUtil;
-
 
     @Test
     void loginTest() {
@@ -58,3 +56,4 @@ public class AuthenticationServiceTest {
         Mockito.verify(authenticationRepository, Mockito.times(1)).removeTokenAndUsernameByToken(BEARER_TOKEN.substring(7));
     }
 }
+

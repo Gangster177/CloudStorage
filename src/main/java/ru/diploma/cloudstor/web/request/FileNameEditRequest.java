@@ -1,7 +1,7 @@
 package ru.diploma.cloudstor.web.request;
+
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
-
 
 import javax.validation.constraints.NotBlank;
 
@@ -11,6 +11,4 @@ public class FileNameEditRequest {
 
     @NotBlank(message = "login must not be null")
     private String filename;
-
-
 }

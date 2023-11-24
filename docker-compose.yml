@@ -1,0 +1,31 @@
+version: '3.7'
+
+services:
+
+  server:
+    image: backend
+    container_name: 'cloud-storage-server'
+    build: ./
+    ports:
+      - "8091:8091"
+    depends_on:
+      - database
+    environment:
+      PORT: 8091
+      SPRING_DATASOURCE_URL: jdbc:postgresql://database:5432/postgres
+      SPRING_DATASOURCE_USERNAME: admin
+      SPRING_DATASOURCE_PASSWORD: admin1
+      SPRING_JPA_HIBERNATE_DDL_AUTO: update
+      SPRING_LIQUIBASE_URL: jdbc:postgresql://database:5432/postgres
+      SPRING_LIQUIBASE_USER: admin
+      SPRING_LIQUIBASE_PASSWORD: admin1
+
+  database:
+    image: postgres:alpine
+    container_name: postgres
+    volumes:
+      - /mysql_data:/var/lib/mysql
+    environment:
+      POSTGRES_DB: postgres
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin1

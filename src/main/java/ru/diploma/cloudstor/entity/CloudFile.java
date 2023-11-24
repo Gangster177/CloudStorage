@@ -1,24 +1,22 @@
 package ru.diploma.cloudstor.entity;
 
 
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import jakarta.persistence.*;
 import java.time.LocalDateTime;
-
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "files" ,schema = "netology_diploma")
+@Table(name = "files", schema = "netology_diploma")
 public class CloudFile {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(nullable = false)
     private Long id;
 
     @Column(nullable = false)
@@ -48,5 +46,4 @@ public class CloudFile {
         this.size = size;
         this.userId = id;
     }
-
 }
