@@ -71,7 +71,7 @@ public class AuthenticationService {
         if (authToken.startsWith("Bearer ")) {
             authToken = authToken.substring(7);
         }
-        final String username = authenticationRepository.getUserNameByToken(authToken);
+        final String username = authenticationRepository.getUsernameByToken(authToken);
         log.info("User {} logout", username);
         authenticationRepository.removeTokenAndUsernameByToken(authToken);
     }

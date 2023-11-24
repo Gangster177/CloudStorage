@@ -30,8 +30,8 @@ public class UserServiceTest {
     @Test
     void loadUserByUsername() {
         User userExpected = (User) USER_DETAILS;
-        when(userRepository.findByUsername(USERNAME)).thenReturn(Optional.of(userExpected));
-        assertEquals(userExpected, userService.loadUserByUsername(USERNAME));
+        when(userRepository.findByUsername(USERNAME_1)).thenReturn(Optional.of(userExpected));
+        assertEquals(userExpected, userService.loadUserByUsername(USERNAME_1));
     }
 
     @Test

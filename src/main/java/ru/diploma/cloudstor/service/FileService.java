@@ -140,7 +140,7 @@ public class FileService {
     public Optional<Long> getUserIdFromToken(String authToken) {
         if (authToken.startsWith("Bearer ")) {
             final String authTokenWithoutBearer = authToken.split(" ")[1];
-            final String username = authenticationRepository.getUserNameByToken(authTokenWithoutBearer);
+            final String username = authenticationRepository.getUsernameByToken(authTokenWithoutBearer);
             Optional<User> user = userRepository.findByUsername(username);
             return user.isPresent() ? ofNullable(user.get().getId()) : Optional.empty();
         }

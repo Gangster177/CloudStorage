@@ -16,7 +16,9 @@ import java.util.List;
 import java.util.Set;
 
 public class DataTest {
-    public static final String USERNAME = "admin@gmail.com";
+    public static final String USERNAME_1 = "admin@gmail.com";
+    public static final String USERNAME_2 = "user@gmail.com";
+
     public static final String USER_UNAUTHORIZED = "unauthorized@gmail.com";
     public static final String PASSWORD = "100";
     public static final Long USER_ID = 1L;
@@ -24,12 +26,13 @@ public class DataTest {
     public static final String FILENAME_1 = "file";
     public static final String FILENAME_2 = "file2";
     public static final String FILENAME_NEW = "file_new";
-    public static final String TOKEN = "token";
+    public static final String TOKEN_1 = "token1";
+    public static final String TOKEN_2 = "token2";
     public static final Set<Role> ROLE_SET = new HashSet<>(List.of(new Role(EnumRoles.ROLE_USER)));
-    public static final UserDetails USER_DETAILS = new User(USER_ID, USERNAME, PASSWORD, ROLE_SET);
+    public static final UserDetails USER_DETAILS = new User(USER_ID, USERNAME_1, PASSWORD, ROLE_SET);
 
-    public static final AuthResponse RESPONSE = new AuthResponse(TOKEN);
-    public static final AuthRequest REQUEST = new AuthRequest(USERNAME, PASSWORD);
+    public static final AuthResponse RESPONSE = new AuthResponse(TOKEN_1);
+    public static final AuthRequest REQUEST = new AuthRequest(USERNAME_1, PASSWORD);
     public static final MockMultipartFile MULTIPART_FILE = new MockMultipartFile(
             FILENAME_1,
             FILENAME_1.getBytes()
