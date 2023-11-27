@@ -46,7 +46,6 @@ public class FileService {
             throw new InputDataException(String.format(" The file with name %s already exists in the storage. " +
                     "Please enter a new name for the file ", filename));
         }
-
         try {
             CloudFile cloudFile = new CloudFile(
                     filename,
@@ -103,9 +102,7 @@ public class FileService {
             log.error("Invalid auth-token: Unauthorized");
             throw new UnauthorizedException("Invalid auth-token: Unauthorized");
         }
-
         fileRepository.updateFileNameByUserId(userId.get(), filename, newFileName);
-
         final CloudFile editedCloudFile = fileRepository.findByUserIdAndFilename(userId.get(), newFileName);
         if (editedCloudFile == null) {
             log.error("FileCloudException : Edited file not found ");
@@ -128,10 +125,6 @@ public class FileService {
             throw new FileCloudException("List of files not received ");
         }
         return files.stream().collect(Collectors.toMap(CloudFile::getFilename, CloudFile::getSize));
-//        return files.stream()
-//                .map(fileMapper::cloudFileToFileWebResponse)
-//                .sorted(Comparator.comparing(FileWebResponse::getFilename))
-//                .collect(Collectors.toList());
     }
 
     public Optional<Long> getUserIdFromToken(String authToken) {
