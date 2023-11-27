@@ -6,7 +6,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-import ru.diploma.cloudstor.entity.User;
 import ru.diploma.cloudstor.repository.UserRepository;
 
 import static java.lang.String.format;
@@ -24,10 +23,9 @@ public class UserService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User userDetails = userRepository.findByUsername(username).orElseThrow(
+        return userRepository.findByUsername(username).orElseThrow(
                 () ->
                         new UsernameNotFoundException(
                                 format("User with username - %s, not found", username)));
-        return userDetails;
     }
 }

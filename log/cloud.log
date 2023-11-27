@@ -1,3 +1,15 @@
-2023-11-24 19:35:25 INFO  Authentication is successfully
-2023-11-24 19:35:25 INFO  User user@gmail.com is authorized
-2023-11-24 19:35:26 INFO  Files [] received successfully
+2023-11-27 17:10:59 INFO  Authentication is successfully
+2023-11-27 17:10:59 INFO  User user@gmail.com is authorized
+2023-11-27 17:10:59 INFO  Files [] received successfully
+2023-11-27 17:11:04 INFO  Success upload file. User with ID 1
+2023-11-27 17:11:04 INFO  File b.txt uploaded successfully
+2023-11-27 17:11:06 INFO  Files [FileWebResponse(filename=b.txt, size=2)] received successfully
+2023-11-27 17:11:08 INFO  Success upload file. User with ID 1
+2023-11-27 17:11:08 INFO  File a.txt uploaded successfully
+2023-11-27 17:11:10 INFO  Files [FileWebResponse(filename=a.txt, size=3), FileWebResponse(filename=b.txt, size=2)] received successfully
+2023-11-27 17:11:12 INFO  Success delete file. User with ID 1
+2023-11-27 17:11:12 INFO  File b.txt deleted successfully
+2023-11-27 17:11:13 INFO  Success delete file. User with ID 1
+2023-11-27 17:11:13 INFO  File a.txt deleted successfully
+2023-11-27 17:11:14 INFO  Files [] received successfully
+2023-11-27 17:11:15 INFO  Files [] received successfully

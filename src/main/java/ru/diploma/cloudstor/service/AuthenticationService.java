@@ -2,8 +2,6 @@ package ru.diploma.cloudstor.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import ru.diploma.cloudstor.repository.AuthenticationRepository;
@@ -17,15 +15,12 @@ import ru.diploma.cloudstor.web.response.AuthResponse;
 @RequiredArgsConstructor
 public class AuthenticationService {
 
-    private final AuthenticationManager authenticationManager;
     private final UserService userService;
     private final JwtTokenUtil jwtTokenUtil;
     private final AuthenticationRepository authenticationRepository;
 
     public AuthResponse login(AuthRequest request) {
         final String username = request.getLogin();
-        final String password = request.getPassword();
-        authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
         final UserDetails userDetails = userService.loadUserByUsername(username);
         String token = jwtTokenUtil.generateToken(userDetails);
         authenticationRepository.putTokenAndUsername(token, username);

@@ -11,13 +11,11 @@ import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
 import ru.diploma.cloudstor.entity.CloudFile;
 import ru.diploma.cloudstor.entity.User;
-import ru.diploma.cloudstor.mapper.FileMapper;
 import ru.diploma.cloudstor.repository.AuthenticationRepository;
 import ru.diploma.cloudstor.repository.FileRepository;
 import ru.diploma.cloudstor.repository.UserRepository;
-import ru.diploma.cloudstor.web.response.FileWebResponse;
 
-import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import static java.util.Optional.ofNullable;
@@ -39,8 +37,6 @@ public class FileServiceTest {
     UserRepository userRepository;
     @Mock
     AuthenticationRepository authenticationRepository;
-    @Mock
-    FileMapper fileMapper;
 
     @BeforeEach
     void setUp() {
@@ -81,16 +77,11 @@ public class FileServiceTest {
 
     @Test
     void getAllFilesTest() {
-
-        FileWebResponse fileWebResponse1 = new FileWebResponse(FILENAME_1, Math.toIntExact(TEST_FILE_1.getSize()));
-        FileWebResponse fileWebResponse2 = new FileWebResponse(FILENAME_2, Math.toIntExact(TEST_FILE_2.getSize()));
-        List<FileWebResponse> expectedList = List.of(fileWebResponse1, fileWebResponse2);
-
+        Map<String, Long> expectedList = Map.of(
+                FILENAME_1, TEST_FILE_1.getSize(),
+                FILENAME_2, TEST_FILE_2.getSize());
         when(fileRepository.findAllByUserIdWithLimit(USER_ID, CLOUD_FILES.size())).thenReturn(CLOUD_FILES);
-        when(fileMapper.cloudFileToFileWebResponse(TEST_FILE_1)).thenReturn(fileWebResponse1);
-        when(fileMapper.cloudFileToFileWebResponse(TEST_FILE_2)).thenReturn(fileWebResponse2);
-
-        List<FileWebResponse> resultList = fileService.getAllFiles(BEARER_TOKEN, expectedList.size());
+        Map<String, Long> resultList = fileService.getAllFiles(BEARER_TOKEN, expectedList.size());
         assertEquals(expectedList, resultList);
     }
 

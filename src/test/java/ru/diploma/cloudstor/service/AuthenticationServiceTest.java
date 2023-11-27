@@ -7,8 +7,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import ru.diploma.cloudstor.repository.AuthenticationRepository;
 import ru.diploma.cloudstor.security.JwtTokenUtil;
 import ru.diploma.cloudstor.web.response.AuthResponse;
@@ -28,9 +26,6 @@ public class AuthenticationServiceTest {
     AuthenticationRepository authenticationRepository;
 
     @Mock
-    AuthenticationManager authenticationManager;
-
-    @Mock
     UserService userService;
 
     @Mock
@@ -44,7 +39,6 @@ public class AuthenticationServiceTest {
         AuthResponse expected = RESPONSE;
         AuthResponse result = authenticationService.login(REQUEST);
         assertEquals(expected, result);
-        Mockito.verify(authenticationManager, Mockito.times(1)).authenticate(new UsernamePasswordAuthenticationToken(USERNAME_1, PASSWORD));
         Mockito.verify(authenticationRepository, Mockito.times(1)).putTokenAndUsername(TOKEN_1, USERNAME_1);
     }
 

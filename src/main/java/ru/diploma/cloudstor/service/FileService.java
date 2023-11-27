@@ -11,20 +11,16 @@ import ru.diploma.cloudstor.entity.User;
 import ru.diploma.cloudstor.exception.FileCloudException;
 import ru.diploma.cloudstor.exception.InputDataException;
 import ru.diploma.cloudstor.exception.UnauthorizedException;
-import ru.diploma.cloudstor.mapper.FileMapper;
 import ru.diploma.cloudstor.repository.AuthenticationRepository;
 import ru.diploma.cloudstor.repository.FileRepository;
 import ru.diploma.cloudstor.repository.UserRepository;
-import ru.diploma.cloudstor.web.response.FileWebResponse;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
-import java.util.Comparator;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
-
-import static java.util.Optional.ofNullable;
 
 
 @Slf4j
@@ -35,13 +31,12 @@ public class FileService {
     private final AuthenticationRepository authenticationRepository;
     private final UserRepository userRepository;
     private final FileRepository fileRepository;
-    private final FileMapper fileMapper;
 
 
     @Transactional
     public void uploadFile(String authToken, String filename, MultipartFile file) {
         final Optional<Long> userId = getUserIdFromToken(authToken);
-        if (!userId.isPresent()) {
+        if (userId.isEmpty()) {
             log.error("Invalid auth-token: Unauthorized");
             throw new UnauthorizedException("Invalid auth-token: Unauthorized");
         }
@@ -53,7 +48,13 @@ public class FileService {
         }
 
         try {
-            CloudFile cloudFile = new CloudFile(filename, LocalDateTime.now(), file.getContentType(), file.getBytes(), file.getSize(), userId.get());
+            CloudFile cloudFile = new CloudFile(
+                    filename,
+                    LocalDateTime.now(),
+                    file.getContentType(),
+                    file.getBytes(),
+                    file.getSize(),
+                    userId.get());
             fileRepository.save(cloudFile);
             log.info("Success upload file. User with ID {}", userId.get());
         } catch (IOException e) {
@@ -65,7 +66,7 @@ public class FileService {
     @Transactional
     public void deleteFile(String authToken, String filename) {
         final Optional<Long> userId = getUserIdFromToken(authToken);
-        if (!userId.isPresent()) {
+        if (userId.isEmpty()) {
             log.error("Invalid auth-token: Unauthorized");
             throw new UnauthorizedException("Invalid auth-token: Unauthorized");
         }
@@ -82,7 +83,7 @@ public class FileService {
     @Transactional
     public CloudFile downloadFile(String authToken, String filename) {
         final Optional<Long> userId = getUserIdFromToken(authToken);
-        if (!userId.isPresent()) {
+        if (userId.isEmpty()) {
             log.error("Invalid auth-token: Unauthorized");
             throw new UnauthorizedException("Invalid auth-token: Unauthorized");
         }
@@ -114,11 +115,10 @@ public class FileService {
         }
     }
 
-
     @Transactional
-    public List<FileWebResponse> getAllFiles(String authToken, int limit) {
+    public Map<String, Long> getAllFiles(String authToken, int limit) {
         final Optional<Long> userId = getUserIdFromToken(authToken);
-        if (!userId.isPresent()) {
+        if (userId.isEmpty()) {
             log.error("Invalid auth-token: Unauthorized");
             throw new UnauthorizedException("Invalid auth-token: Unauthorized");
         }
@@ -127,10 +127,11 @@ public class FileService {
             log.error("FileCloudException: List of files not received ");
             throw new FileCloudException("List of files not received ");
         }
-        return files.stream()
-                .map(fileMapper::cloudFileToFileWebResponse)
-                .sorted(Comparator.comparing(FileWebResponse::getFilename))
-                .collect(Collectors.toList());
+        return files.stream().collect(Collectors.toMap(CloudFile::getFilename, CloudFile::getSize));
+//        return files.stream()
+//                .map(fileMapper::cloudFileToFileWebResponse)
+//                .sorted(Comparator.comparing(FileWebResponse::getFilename))
+//                .collect(Collectors.toList());
     }
 
     public Optional<Long> getUserIdFromToken(String authToken) {
@@ -138,8 +139,8 @@ public class FileService {
             final String authTokenWithoutBearer = authToken.split(" ")[1];
             final String username = authenticationRepository.getUsernameByToken(authTokenWithoutBearer);
             Optional<User> user = userRepository.findByUsername(username);
-            return user.isPresent() ? ofNullable(user.get().getId()) : Optional.empty();
+            return user.map(User::getId);
         }
-        return null;
+        return Optional.empty();
     }
 }
